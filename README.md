@@ -1,6 +1,4 @@
-Here’s a refined version of your `README.md` file with all the details organized and formatted for clarity:
 
-```markdown
 # Multiplayer Fighting Game
 
 This is a simple multiplayer fighting game built with Node.js, Express, and vanilla JavaScript. It allows two players to attack and heal each other until one player's health reaches zero. The game includes sound effects for attacks and healing actions.
