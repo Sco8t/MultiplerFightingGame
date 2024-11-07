@@ -77,7 +77,74 @@ The game logic is implemented in `public/script.js`. Here’s a brief overview:
 - **Simulation**: The `play` function simulates random actions (attacks and heals) between players until one player’s health reaches zero.
 
 ### Example Game Logic (Excerpt from `script.js`):
+### Game Logic Explanation
 
+#### Player Class
+- Represents a player with properties: `name`, 
+
+health
+
+, and 
+
+attackDmg
+
+.
+- Methods: 
+
+strike
+
+ (attack) and 
+
+heal
+
+.
+
+#### Game Class
+- Manages the game state.
+- 
+
+play
+
+ method simulates random actions (attack/heal) between players until one player's health is zero.
+
+#### Main Logic
+1. **Initialization**:
+   - Create two players: 
+
+player1
+
+ and 
+
+player2
+
+.
+   - Assign them to 
+
+p1
+
+ and 
+
+p2
+
+.
+
+2. **Simulation**:
+   - 
+
+play
+
+ method runs a loop until one player's health is zero.
+   - Randomly selects actions: 
+
+strike
+
+ or 
+
+heal
+
+.
+
+### Code Excerpt
 ```javascript
 class Player {
   constructor(name, health, attackDmg) {
@@ -86,42 +153,38 @@ class Player {
     this.attackDmg = attackDmg;
   }
 
-strike (player, enemy, attackDmg) {
-
-    attackDmg = Math.floor(Math.random() * 10) + 1;
-    enemy.health -= attackDmg;
-    updateGame(p1, p2, gameState);
-    return `${player.name} attacks ${enemy.name} for ${attackDmg} Damage`;
+  strike(player, enemy, attackDmg) {
+    // Logic for player attack
   }
 
-  heal (player) {
-
-    let healVal = Math.floor(Math.random() * 5) + 1;
-    player.health += healVal;
-    updateGame(p1, p2, gameState);
-    return `${player.name} heals for ${healVal}`;
-
+  heal(player) {
+    // Logic for player heal
   }
 }
 
 class Game {
-  updateGame(p1, p2, gameState) {
-    // Logic to update game state
-  }
-
   play(p1, p2) {
     while (!(p1.health <= 0 || p2.health <= 0)) {
-      const actions = [
+      var actions = [
         p1.strike(p1, p2, p1.attackDmg),
         p2.strike(p2, p1, p2.attackDmg),
         p1.heal(p1),
         p2.heal(p2)
       ];
-      const randomAction = Math.floor(Math.random() * actions.length);
+      var randomAction = Math.floor(Math.random() * actions.length);
       actions[randomAction];
     }
   }
 }
+
+let player1 = new Player("scott", 100, 0);
+let player2 = new Player("rohit", 100, 0);
+
+let p1 = player1;
+let p2 = player2;
+
+let game = new Game();
+game.play(p1, p2);
 ```
 
 ## Files
