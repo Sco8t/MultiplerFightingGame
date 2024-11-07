@@ -86,12 +86,21 @@ class Player {
     this.attackDmg = attackDmg;
   }
 
-  strike(player, enemy, attackDmg) {
-    // Logic for player attack
+strike (player, enemy, attackDmg) {
+
+    attackDmg = Math.floor(Math.random() * 10) + 1;
+    enemy.health -= attackDmg;
+    updateGame(p1, p2, gameState);
+    return `${player.name} attacks ${enemy.name} for ${attackDmg} Damage`;
   }
 
-  heal(player) {
-    // Logic for player heal
+  heal (player) {
+
+    let healVal = Math.floor(Math.random() * 5) + 1;
+    player.health += healVal;
+    updateGame(p1, p2, gameState);
+    return `${player.name} heals for ${healVal}`;
+
   }
 }
 
