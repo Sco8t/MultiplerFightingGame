@@ -1,4 +1,3 @@
-
 # Multiplayer Fighting Game
 
 This is a simple multiplayer fighting game built with Node.js, Express, and vanilla JavaScript. It allows two players to attack and heal each other until one player's health reaches zero. The game includes sound effects for attacks and healing actions.
@@ -8,26 +7,25 @@ This is a simple multiplayer fighting game built with Node.js, Express, and vani
 ```
 FightingGameNode/
 ├── public/
-│   ├── images/
+│   ├── images/                 # Player avatars and other game visuals
 │   │   ├── kyu.gif
 │   │   ├── ken.gif
 │   │   └── other-images...
-│   ├── sounds/
+│   ├── sounds/                 # Sound effects for game actions
 │   │   ├── fastpunch.mp3
 │   │   ├── fastheal.mp3
 │   │   ├── quickhit.mp3
 │   │   ├── quickheal.mp3
 │   │   ├── victory.mp3
 │   │   └── other-sounds...
-│   ├── style.css
-│   ├── script.js
-│   └── other-public-files...
+│   ├── style.css               # CSS file for game styling
+│   └── script.js               # JavaScript file with game logic
 ├── views/
-│   ├── index.html
-│   └── other-view-files...
-├── server.js
-└── package.json
+│   └── index.html              # Main HTML file for the game interface
+├── server.js                   # Express server setup
+└── package.json                # Project metadata and dependencies
 ```
+
 ## Getting Started
 
 ### Prerequisites
@@ -69,122 +67,64 @@ FightingGameNode/
 
 ## Game Logic
 
-The game logic is implemented in `public/script.js`. Here’s a brief overview:
+The core game logic resides in `public/script.js` and follows these main components:
 
-- **Player Class**: Represents a player with properties like `name`, `health`, and `attackDmg`. It includes methods such as `strike` (for attacking) and `heal`.
-- **Game Class**: Manages the game state and updates it based on player actions. The `updateGame` function checks if either player's health is zero and updates the game state.
-- **Event Listeners**: Listens for keyboard inputs to trigger player actions (attack and heal).
-- **Simulation**: The `play` function simulates random actions (attacks and heals) between players until one player’s health reaches zero.
+### Player Class
+The `Player` class represents each player, with properties such as `name`, `health`, and `attackDmg`. It has two main methods:
+- **strike**: Reduces the enemy's health by a random damage value (between 1 and 10).
+- **heal**: Restores the player’s health by a random value (between 1 and 5).
+
+Both actions (`strike` and `heal`) are triggered by specific key presses and update the game state each time they’re performed.
+
+### Game Class
+The `Game` class manages the game state and determines the winner. Key methods include:
+- **updateGame**: Checks the players' health status and displays their names and health. If any player’s health drops to zero, it declares the game over and announces the winner.
+- **declareWinner**: Declares the winner based on which player’s health reaches zero first, and plays the victory sound.
+- **play**: Simulates random actions (attacks and heals) between the two players until one player’s health is zero. This method can be activated to simulate a non-interactive game session.
+
+### Game Flow
+- **Keyboard Controls**: The game listens for keyboard inputs to perform actions. `Q` and `P` are for attacks, while `A` and `L` trigger healing.
+- **Simulation**: The play button starts an automated simulation of random attacks and heals until one player's health reaches zero.
 
 ### Example Game Logic (Excerpt from `script.js`):
-### Game Logic Explanation
 
-#### Player Class
-- Represents a player with properties: `name`, 
-
-health
-
-, and 
-
-attackDmg
-
-.
-- Methods: 
-
-strike
-
- (attack) and 
-
-heal
-
-.
-
-#### Game Class
-- Manages the game state.
-- 
-
-play
-
- method simulates random actions (attack/heal) between players until one player's health is zero.
-
-#### Main Logic
-1. **Initialization**:
-   - Create two players: 
-
-player1
-
- and 
-
-player2
-
-.
-   - Assign them to 
-
-p1
-
- and 
-
-p2
-
-.
-
-2. **Simulation**:
-   - 
-
-play
-
- method runs a loop until one player's health is zero.
-   - Randomly selects actions: 
-
-strike
-
- or 
-
-heal
-
-.
-
-### Code Excerpt
 ```javascript
 class Player {
-  constructor(name, health, attackDmg) {
+  constructor(name, health, attackDamage) {
     this.name = name;
     this.health = health;
-    this.attackDmg = attackDmg;
+    this.attackDmg = attackDamage;
   }
 
   strike(player, enemy, attackDmg) {
-    // Logic for player attack
+    attackDmg = Math.floor(Math.random() * 10) + 1;
+    enemy.health -= attackDmg;
+    updateGame(player, enemy, gameState);
+    return `${player.name} attacks ${enemy.name} for ${attackDmg} Damage`;
   }
 
   heal(player) {
-    // Logic for player heal
+    let healVal = Math.floor(Math.random() * 5) + 1;
+    player.health += healVal;
+    updateGame(player, enemy, gameState);
+    return `${player.name} heals for ${healVal}`;
   }
 }
 
 class Game {
-  play(p1, p2) {
-    while (!(p1.health <= 0 || p2.health <= 0)) {
-      var actions = [
-        p1.strike(p1, p2, p1.attackDmg),
-        p2.strike(p2, p1, p2.attackDmg),
-        p1.heal(p1),
-        p2.heal(p2)
-      ];
-      var randomAction = Math.floor(Math.random() * actions.length);
-      actions[randomAction];
+  updateGame(p1, p2, gameState) {
+    if (p1.health <= 0 || p2.health <= 0) {
+      gameState = true;
+      resultDiv.innerHTML = game.declareWinner(p1, p2);
     }
   }
+
+  declareWinner(p1, p2) {
+    let resultMsg = p1.health <= 0 ? `${p2.name} WINS` : `${p1.name} WINS`;
+    svictory.play();
+    return resultMsg;
+  }
 }
-
-let player1 = new Player("scott", 100, 0);
-let player2 = new Player("rohit", 100, 0);
-
-let p1 = player1;
-let p2 = player2;
-
-let game = new Game();
-game.play(p1, p2);
 ```
 
 ## Files
@@ -209,10 +149,6 @@ Directory containing sound effects for the game (attack and heal sounds).
 
 Directory containing images for player avatars and other visuals used in the game.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
 ## Acknowledgements
 
 - [Express](https://expressjs.com/)
@@ -220,8 +156,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [GitHub](https://github.com/)
 
 ---
-
 Enjoy playing the Multiplayer Fighting Game and feel free to contribute!
 ```
-
-This `README.md` file provides a clear structure, installation instructions, a description of the game logic, and an overview of the files involved in the project. Let me know if there are any other details you'd like to add!
