@@ -28,40 +28,6 @@ FightingGameNode/
 ├── server.js
 └── package.json
 ```
-```
-├── .gitignore
-├── .mvn/
-│   ├── wrapper/
-│   │   ├── maven-wrapper.jar
-│   │   └── maven-wrapper.properties
-├── mvnw
-├── mvnw.cmd
-├── pom.xml
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── comp31/
-│   │   │       ├── a2/
-│   │   │       │   ├── controllers/
-│   │   │       │   │   └── MainController.java
-│   │   │       │   ├── model/
-│   │   │       │   │   ├── entities/
-│   │   │       │   │   └── repositories/
-│   │   │       │   └── services/
-│   │   ├── resources/
-│   │   │   ├── application.properties
-│   │   │   ├── data.sql.txt
-│   │   │   ├── schema.sql.txt
-│   │   │   ├── static/
-│   │   │   └── templates/
-│   └── test/
-│       ├── java/
-│       │   └── comp31/
-│       │       └── a2/
-│       │           └── A2ApplicationTests.java
-└── target/
-```
-
 ## Getting Started
 
 ### Prerequisites
